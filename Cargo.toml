@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["南浦月 <nanpuyue@gmail.com>"]
 edition = "2021"
 license = "MIT"
+homepage = "https://github.com/nanpuyue/tokio-fork"
+repository = "https://github.com/nanpuyue/tokio-fork"
+categories = ["asynchronous", "os::unix-apis"]
+keywords = ["async", "fork", "linux", "non-blocking", "tokio"]
 description = "Fork a process and wait the child process asynchronously"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
