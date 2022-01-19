@@ -3,6 +3,7 @@ name = "tokio-fork"
 version = "0.1.0"
 authors = ["南浦月 <nanpuyue@gmail.com>"]
 edition = "2021"
+license = "MIT"
 description = "Fork a process and wait the child process asynchronously"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
