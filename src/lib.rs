@@ -26,9 +26,11 @@ macro_rules! cvt {
     };
 }
 
+/// Create a new child process duplicating the parent process.
+///
 /// # Safety
 ///
-/// It is strongly recommended to fork before creating the tokio runtime.
+/// It's strongly recommended to fork before creating the tokio runtime.
 ///
 pub unsafe fn fork() -> Result<Fork> {
     match cvt!(libc::fork())? {
