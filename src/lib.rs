@@ -26,7 +26,12 @@ macro_rules! cvt {
     };
 }
 
-pub fn fork() -> Result<ForkResult> {
+/// # Safety
+///
+/// It is strongly recommended to fork before creating the tokio runtime.
+///
+#[allow(unused_unsafe)]
+pub unsafe fn fork() -> Result<ForkResult> {
     match cvt!(libc::fork())? {
         0 => Ok(ForkResult::Child),
         pid => Ok(ForkResult::Parent(Child { pid, status: None })),
