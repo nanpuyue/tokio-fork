@@ -15,3 +15,6 @@ description = "Fork a process and wait the child process asynchronously"
 [dependencies]
 libc = "0.2.112"
 tokio = { version = "1.15.0", features = ["signal"] }
+
+[dev-dependencies]
+tokio = { version = "1.15.0", features = ["rt", "signal"] }
