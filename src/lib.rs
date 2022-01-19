@@ -19,8 +19,8 @@ pub enum Fork {
 
 macro_rules! cvt {
     ($e:expr) => {
-        match unsafe { $e } {
-            -1 => Err(std::io::Error::last_os_error()),
+        match $e {
+            -1 => Err(Error::last_os_error()),
             x => Ok(x),
         }
     };
@@ -30,7 +30,6 @@ macro_rules! cvt {
 ///
 /// It is strongly recommended to fork before creating the tokio runtime.
 ///
-#[allow(unused_unsafe)]
 pub unsafe fn fork() -> Result<Fork> {
     match cvt!(libc::fork())? {
         0 => Ok(Fork::Child),
@@ -50,7 +49,7 @@ impl Child {
                 "invalid argument: can't kill an exited process",
             ))
         } else {
-            cvt!(libc::kill(self.pid, libc::SIGKILL)).map(drop)
+            cvt!(unsafe { libc::kill(self.pid, libc::SIGKILL) }).map(drop)
         }
     }
 
@@ -75,7 +74,7 @@ impl Child {
 
         let mut status = 0;
         loop {
-            match cvt!(libc::waitpid(self.pid, &mut status, 0)) {
+            match cvt!(unsafe { libc::waitpid(self.pid, &mut status, 0) }) {
                 Err(ref e) if e.kind() == ErrorKind::Interrupted => {}
                 x => break x,
             }
@@ -90,7 +89,7 @@ impl Child {
         }
 
         let mut status = 0;
-        let pid = cvt!(libc::waitpid(self.pid, &mut status, libc::WNOHANG))?;
+        let pid = cvt!(unsafe { libc::waitpid(self.pid, &mut status, libc::WNOHANG) })?;
         if pid == 0 {
             Ok(None)
         } else {
