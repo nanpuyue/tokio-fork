@@ -12,7 +12,7 @@ pub struct Child {
 }
 
 #[derive(Debug)]
-pub enum ForkResult {
+pub enum Fork {
     Parent(Child),
     Child,
 }
@@ -31,10 +31,10 @@ macro_rules! cvt {
 /// It is strongly recommended to fork before creating the tokio runtime.
 ///
 #[allow(unused_unsafe)]
-pub unsafe fn fork() -> Result<ForkResult> {
+pub unsafe fn fork() -> Result<Fork> {
     match cvt!(libc::fork())? {
-        0 => Ok(ForkResult::Child),
-        pid => Ok(ForkResult::Parent(Child { pid, status: None })),
+        0 => Ok(Fork::Child),
+        pid => Ok(Fork::Parent(Child { pid, status: None })),
     }
 }
 

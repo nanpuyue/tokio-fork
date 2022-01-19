@@ -13,11 +13,11 @@ use std::thread::sleep;
 use std::time::Duration;
 
 use tokio::runtime::Builder;
-use tokio_fork::{fork, ForkResult};
+use tokio_fork::{fork, Fork};
 
 fn main() -> Result<()> {
     match unsafe { fork()? } {
-        ForkResult::Parent(mut child) => {
+        Fork::Parent(mut child) => {
             // build the runtime with enable_io()
             let rt = Builder::new_current_thread().enable_io().build()?;
 
@@ -30,7 +30,7 @@ fn main() -> Result<()> {
                 Ok(())
             })
         }
-        ForkResult::Child => {
+        Fork::Child => {
             println!("This is the child process, I will exit with code 1 in 3s.");
             sleep(Duration::from_secs(3));
             exit(1)
