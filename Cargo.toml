@@ -1,0 +1,12 @@
+[package]
+name = "tokio-fork"
+version = "0.1.0"
+authors = ["南浦月 <nanpuyue@gmail.com>"]
+edition = "2021"
+description = "Fork a process and wait the child process asynchronously"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libc = "0.2.112"
+tokio = { version = "1.15.0", features = ["signal"] }
